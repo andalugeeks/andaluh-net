@@ -6,8 +6,11 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Andaluh", "Andaluh\Andaluh.csproj", "{25F19C8A-6301-41E7-B127-90387F73ABF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.csproj", "{E0097AB9-0B72-4D41-81BB-53D64A282CB1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{25F19C8A-6301-41E7-B127-90387F73ABF6} = {25F19C8A-6301-41E7-B127-90387F73ABF6}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3A542431-3F5D-4F90-9151-58B13FE5BBFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{3A542431-3F5D-4F90-9151-58B13FE5BBFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
