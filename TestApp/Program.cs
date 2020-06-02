@@ -1,14 +1,14 @@
-﻿using System;
-using Andaluh;
+﻿using Andaluh;
+using System;
 
 namespace TestApp
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        static void Main() 
         {
             var result = "Esto es una prueba de transcripción con el modo debug activo para ver cómo va cambiando la frase cada regla".ToAndaluh();
-            Console.WriteLine("------------------RESULT=>"+ result);
+            Console.WriteLine("------------------RESULT=>" + result);
         }
     }
 }
