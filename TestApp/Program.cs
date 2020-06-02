@@ -5,10 +5,18 @@ namespace TestApp
 {
     public class Program
     {
-        static void Main() 
+        static void Main(string[] args) 
         {
-            var result = "Esto es una prueba de transcripción con el modo debug activo para ver cómo va cambiando la frase cada regla".ToAndaluh();
-            Console.WriteLine("------------------RESULT=>" + result);
+            string result;
+            if (args.Length == 0)
+                result = "Para probar la funcionalidad especifica dotnet run \"Texto a transcribir\"";
+            else
+                result = args[0].ToAndaluh();
+
+            Console.Write("Transcripción => ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(result);
+            Console.ResetColor();
         }
     }
 }

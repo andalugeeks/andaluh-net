@@ -1,31 +1,34 @@
 ﻿using Andaluh.Rules;
-using System;
+using Andaluh.Rules.Base;
+using System.Collections.Generic;
 
 namespace Andaluh
 {
-    internal static class EPAEngine
+    internal class EPAEngine
     {
-        private static readonly (string Name, Func<string, string> Method)[] transliterationMethodsOrder =
+        public readonly Dictionary<string, string> DynamicRuleExceptions = new Dictionary<string, string>();
+
+        private RuleBundle[] rulesOrder => new RuleBundle[]
         {
-            ("h_rules", EPARules.h_rules),
-            ("x_rules", EPARules.x_rules),
-            ("ch_rules", EPARules.ch_rules),
-            ("gj_rules", EPARules.gj_rules),
-            ("v_rules", EPARules.v_rules),
-            ("ll_rules", EPARules.ll_rules),
-            ("l_rules", EPARules.l_rules),
-            ("psico_pseudo_rules", EPARules.psico_pseudo_rules),
-            ("vaf_rules", EPARules.vaf_rules),
-            ("word_ending_rules", EPARules.word_ending_rules),
-            ("digraph_rules", EPARules.digraph_rules),
-            ("exception_rules", EPARules.exception_rules),
-            ("word_interaction_rules", EPARules.word_interaction_rules)
+            new HRules(DynamicRuleExceptions),
+            new XRules(),
+            new ChRules(),
+            new GJRules(DynamicRuleExceptions),
+            new VRules(),
+            new LLRules(),
+            new LRules(),
+            new PsicoPseudoRules(),
+            new VAFRules(),
+            new WordEndingRules(),
+            new DigraphRules(),
+            new ExceptionRules(),
+            new WordInteractionRules()
         };
 
-        public static string Transcribe(string text)
+        public string Transcribe(string text)
         {
-            foreach (var rule in transliterationMethodsOrder)
-                text = rule.Method(text);
+            foreach (var rule in rulesOrder)
+                text = rule.Execute(text);
 
             return text;
         }

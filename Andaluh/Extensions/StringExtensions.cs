@@ -8,6 +8,8 @@ namespace Andaluh.Extensions
     {
         public static string ReplaceWordsByDictionary(this string text, Dictionary<string, string> exceptions)
         {
+            if (exceptions == null) return text;
+
             foreach (var exception in exceptions)
             {
                 var allWords = new Regex(@"\w+");

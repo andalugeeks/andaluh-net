@@ -1,5 +1,6 @@
 using Andaluh;
 using System;
+using System.Threading.Tasks;
 using Tests.CSVUtils;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace Tests
 
             var todasLasPalabras = ReadCSV.GetRows("..\\..\\..\\lemario.csv");
 
-            foreach (var palabra in todasLasPalabras)
+            Parallel.ForEach(todasLasPalabras, palabra =>
             {
                 if (palabra.Andaluh == palabra.Castellano.ToAndaluh()) aciertos++;
                 else
@@ -24,7 +25,7 @@ namespace Tests
                     fallos++;
                     listaDeFallos += $"Error: {palabra.Castellano} => {palabra.Castellano.ToAndaluh()} se esperaba {palabra.Andaluh}\r\n";
                 }
-            }
+            });
 
             if (fallos != 0) throw new Exception($"Aciertos {aciertos} | Fallos {fallos} => {aciertos * 100/(aciertos+fallos)}%\r\nLISTA DE ERRORES\r\n{listaDeFallos}");
 
