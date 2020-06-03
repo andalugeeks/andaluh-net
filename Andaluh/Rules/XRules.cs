@@ -8,7 +8,7 @@ namespace Andaluh.Rules
     internal class XRules : RuleBundle
     {
         private static readonly Regex pattern_x_starting = new Regex("(?i)([xX])([aáeéiíoóuú])");
-        private static readonly Regex pattern_x = new Regex("(?i)([aeiouáéíóú])(x)([aeiouáéíóú])");
+        private static readonly Regex pattern_x = new Regex("(?i)([aeiouáéíóú])(x)([aeiouáéíóúy])");
 
         protected override IEnumerable<Rule> Rules => new[]
         {

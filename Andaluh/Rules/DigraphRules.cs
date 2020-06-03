@@ -67,6 +67,7 @@ namespace Andaluh.Rules
             var vowel_Circum = match.Value[0].GetVowelCircumflex().ToString();
             var digraph_char = match.Value[2];
 
+            if (suffix.IsNullOrEmpty() && match.Groups[2].Value.ToLower() == "xy") return match.Value;
             return suffix.IsNullOrEmpty() ? vowel_Circum : vowel_Circum + digraph_char + digraph_char;
         }
 

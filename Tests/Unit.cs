@@ -65,10 +65,28 @@ namespace Tests
         [Fact]
         public void El()
         {
-            var res = EPA.Transcribe("el agua, el Manuel");
+            var res = EPA.Transcribe("el agua, el Manuel, el agua del Manuel");
 
-            Assert.Equal("el agua, er Manuêh", res);
+            Assert.Equal("el agua, er Manuêh, el agua der Manuêh", res);
         }
+
+        [Fact]
+        public void AFortiori()
+        {
+            var res = EPA.Transcribe("a fortiori");
+
+            Assert.Equal("afortiori", res);
+        }
+        
+
+        [Fact]
+        public void Del()
+        {
+            var res = EPA.Transcribe("del abstracto");
+
+            Assert.Equal("del âttrâtto", res);
+        }
+        
 
         [Fact]
         public void Manuel()
@@ -128,6 +146,17 @@ namespace Tests
 
             Assert.Equal("âççorbente âççorbente", res);
         }
+       
+
+        [Fact]
+        public void Sexy()
+        {
+            var res = EPA.Transcribe("sexy");
+
+            Assert.Equal("çêççy", res);
+        }
+
+        
 
         [Fact]
         public void Cacahue()
@@ -145,7 +174,13 @@ namespace Tests
             Assert.Equal("ÊPPANGLÎ", res);
         }
 
-        
+        [Fact]
+        public void Escapes()
+        {
+            var res = EPA.Transcribe("@miguel http://google.com #Hashtag");
+
+            Assert.Equal("@miguel http://google.com #Hashtag", res);
+        }
 
         [Fact]
         public void Casada()

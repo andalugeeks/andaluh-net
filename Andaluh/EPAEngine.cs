@@ -1,5 +1,6 @@
 ﻿using Andaluh.Rules;
 using Andaluh.Rules.Base;
+using Andaluh.SentenceMethods;
 using System.Collections.Generic;
 
 namespace Andaluh
@@ -8,7 +9,7 @@ namespace Andaluh
     {
         public readonly Dictionary<string, string> DynamicRuleExceptions = new Dictionary<string, string>();
 
-        private RuleBundle[] rulesOrder => new RuleBundle[]
+        private RuleBundle[] perWordRules => new RuleBundle[]
         {
             new HRules(DynamicRuleExceptions),
             new XRules(),
@@ -22,16 +23,31 @@ namespace Andaluh
             new WordEndingRules(),
             new DigraphRules(),
             new ExceptionRules(),
-            new WordInteractionRules(),
             new FinalRules()
         };
 
+        private RuleBundle[] perSentenceRules => new RuleBundle[]
+        {
+            new WordInteractionRules()
+        };
+
+
+
         public string Transcribe(string text)
         {
-            foreach (var rule in rulesOrder)
-                text = rule.Execute(text);
+            var tokenizedString = new TokenEvaluator(text);
 
-            return text;
+            foreach (Token word in tokenizedString.GetWordsToTransliterate())
+                foreach (var rule in perWordRules)
+                    word.Value = rule.Execute(word.Value);
+            
+
+            var transliteratedText = tokenizedString.Compile();
+
+            foreach (var rule in perSentenceRules)
+                transliteratedText = rule.Execute(transliteratedText);
+
+            return transliteratedText;
         }
     }
 }

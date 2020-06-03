@@ -25,7 +25,7 @@ namespace Andaluh.Rules.Base
         {
             DynamicRuleExceptions = dynamicRuleExceptions;
 
-            if (Exceptions?.Count() != 0 || DynamicRuleExceptions?.Count() != 0) text = ReplaceExceptions(text);
+            if (Exceptions?.Count() > 0 || DynamicRuleExceptions?.Count() > 0) text = ReplaceExceptions(text);
 
             return ReplaceMany(text);
         }
@@ -37,7 +37,7 @@ namespace Andaluh.Rules.Base
 
             var bias = 0;
 
-            foreach (Match match in matches)
+            foreach (Match match in matches.Where(x=>x.Success))
             {
                 if (NotException(match, text, bias))
                 {

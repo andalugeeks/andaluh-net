@@ -39,8 +39,8 @@ namespace Tests
         public void Test11() =>
             Assert.Equal("Lô ÇAGueçô XiGuaGUA comían cacaGuETê, FramBuEÇâ y Eno, ¡y ABLAN con álito de ÊPPANGLÎ!", EPA.Transcribe("Los SABuesos ChiHuaHUA comían cacaHuETes, FramBuESas y Heno, ¡y HABLAN con hálito de ESPANGLISH!"));
 
-        //[Fact]
-        //public void Test12() =>
-        //Assert.Equal(EPA.Transcribe("Oye sexy @miguel, la web HTTPS://andaluh.es no sale en google.es pero si en http://google.com #porqueseñor", escape_links = True), "Oye çêççy @miguel, la wêh HTTPS://andaluh.es no çale en google.es pero çi en http://google.com #porqueseñor");
+        [Fact]
+        public void Test12() =>
+            Assert.Equal("Oye çêççy @miguel, la wêh HTTPS://andaluh.es no çale en https://www.google.es pero çi en http://google.com #porqueseñor", EPA.Transcribe("Oye sexy @miguel, la web HTTPS://andaluh.es no sale en https://www.google.es pero si en http://google.com #porqueseñor"));
     }
 }
