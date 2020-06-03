@@ -22,6 +22,15 @@ namespace Tests
         }
 
         [Fact]
+        public void ElQueAcanala()
+        {
+            var res = EPA.Transcribe("acanalador");
+
+            Assert.Equal("acanalaôh", res);
+        }
+        
+
+        [Fact]
         public void D_Intervocalica()
         {
             var res = EPA.Transcribe("Oido un ruido");
@@ -111,6 +120,7 @@ namespace Tests
             Assert.Equal("Trâpportandonô a la cônnotaçión perppicâh del âttrâtto çorttiçio de Alâkka, el aîl-lante pláttico âççorbente âffîççió", res);
         }
 
+        
         [Fact]
         public void Absorvente()
         {
@@ -144,6 +154,15 @@ namespace Tests
 
             Assert.Equal("Caçá", res);
         }
+
+        [Fact]
+        public void Ahotado()
+        {
+            var res = EPA.Transcribe("ahotado");
+
+            Assert.Equal("ahotao", res);
+        }
+        
 
         [Fact]
         public void Pseudoescritor()

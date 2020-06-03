@@ -22,7 +22,8 @@ namespace Andaluh
             new WordEndingRules(),
             new DigraphRules(),
             new ExceptionRules(),
-            new WordInteractionRules()
+            new WordInteractionRules(),
+            new FinalRules()
         };
 
         public string Transcribe(string text)

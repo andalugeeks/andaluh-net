@@ -8,12 +8,12 @@ namespace Andaluh.Rules
 {
     internal class WordEndingRules : RuleBundle
     {
-        private static readonly Regex pattern_intervowel_d_end = new Regex("(?i)([aiíÍ])(d)([oa])(s?)\\b");
+        private static readonly Regex pattern_intervowel_d_end = new Regex(@"(?i)([aiíÍ])(d)([oa])(s?)\b");
         private static readonly Regex pattern_eps_end = new Regex("(?i)(e)(ps)");
-        private static readonly Regex pattern_d_end = new Regex("(?i)([aeiouáéíóú])(d)\\b");
-        private static readonly Regex pattern_s_end = new Regex("(?i)([aeiouáéíóú])(s)\\b");
-        private static readonly Regex pattern_const_end = new Regex("(?i)([aeiouáâçéíóú])([bcfgjkprtxz]\\b)");
-        private static readonly Regex pattern_l_end = new Regex("(?i)([aeiouáâçéíóú])(l\\b)");
+        private static readonly Regex pattern_d_end = new Regex(@"(?i)([aeiouáéíóú])(d)\b");
+        private static readonly Regex pattern_s_end = new Regex(@"(?i)([aeiouáéíóú])(s)\b");
+        private static readonly Regex pattern_const_end = new Regex(@"(?i)([aeiouáâçéíóú])([bcfgjkprtxz]\b)");
+        private static readonly Regex pattern_l_end = new Regex(@"(?i)([aeiouáâçéíóú])(l\b)");
         private static readonly Regex pattern_vocal_tilde = new Regex("(?i)á|é|í|ó|ú");
 
         private static readonly Dictionary<string, string> WORDEND_D_INTERVOWEL_RULES_EXCEPT = new Dictionary<string, string>()
@@ -170,8 +170,6 @@ namespace Andaluh.Rules
             return vocalToStress != default ? apply_stressed_rules(vocalCandidata.ToString()) :
                 apply_stressed_rules(vocalCandidata.ToString()) + vocalCandidata.KeepCase('h');
         }
-
-        
 
         private string apply_stressed_rules(string vocal) => Constants.STRESSED_RULES[vocal];
         private string apply_stressed_rules(char v) => apply_stressed_rules(v.ToString());
