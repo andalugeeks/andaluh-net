@@ -16,8 +16,8 @@
     <PackageTags>Transliteration, Transcription, Andaluz, Andalu, Andalûh, Andalú</PackageTags>
     <Product>Transcriptor Andaluh</Product>
     <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.1.1</FileVersion>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.1.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

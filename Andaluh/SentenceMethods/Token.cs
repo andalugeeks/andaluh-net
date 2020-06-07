@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using static Andaluh.SentenceMethods.TokenEvaluator;
 
@@ -22,12 +23,19 @@ namespace Andaluh.SentenceMethods
         public static Token GetEscapedToken(Match match) => 
             new Token(match.Value, match.Index, TranscriptionTypes.Escaped);
 
-        public static Token GetExceptionToken(string exception, int position) =>
-            new Token(exception, position, TranscriptionTypes.Exception);
+        public static Token GetExceptionToken(Match match) =>
+            new Token(match.Value, match.Index, TranscriptionTypes.Exception);
 
         public static Token GetStandardToken(string str, int position) =>
             new Token(str, position, TranscriptionTypes.Standard);
 
         public override string ToString() => $"{StartIndex}, {EndIndex}, {Value}";
+
+        internal void Copy(Token newToken)
+        {
+            Value = newToken.Value;
+            StartIndex = newToken.StartIndex;
+            EndIndex = newToken.EndIndex;
+        }
     }
 }

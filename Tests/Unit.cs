@@ -183,6 +183,14 @@ namespace Tests
         }
 
         [Fact]
+        public void MasEscapes()
+        {
+            var res = EPA.Transcribe("Mi correo es todito@outlook.com es de Outlook. También tengo cuenta en twitter");
+
+            Assert.Equal("Mi correo ê todito@outlook.com ê de Outlook. También tengo cuenta en twitter", res);
+        }
+
+        [Fact]
         public void Casada()
         {
             var res = EPA.Transcribe("Casada");

@@ -4,7 +4,12 @@ namespace Andaluh.SentenceMethods
 {
     public static class SentenceExceptions
     {
-        public static Dictionary<string, string> Exceptions = new Dictionary<string, string>
+        private static string[] TradeMarks = new string[]
+        { 
+            "google", "twitter", "facebook", "outlook"
+        };
+
+        private static Dictionary<string, string> Exceptions = new Dictionary<string, string>
         {
             { "a capela","a capela"},
             { "a contráriis","a contrárî"},
@@ -54,5 +59,31 @@ namespace Andaluh.SentenceMethods
             { "ut supra","ut çupra" },
             { "vox pópuli", "bôppópuli" }
         };
+
+        public static Dictionary<string, string> allExceptions;
+
+        public static Dictionary<string, string> AllExceptions
+        {
+            get
+            {
+                if (allExceptions == null)
+                    allExceptions = CreateAllExceptions();
+
+                return allExceptions;
+            }
+        }
+        private static Dictionary<string, string> CreateAllExceptions()
+        {
+            var allExceptions = new Dictionary<string, string>();
+
+            foreach (var exception in Exceptions)
+                allExceptions.Add(exception.Key, exception.Value);
+            
+            foreach (var tradeMark in TradeMarks)
+                allExceptions.Add(tradeMark, tradeMark);
+            
+
+            return allExceptions;
+        }
     }
 }
