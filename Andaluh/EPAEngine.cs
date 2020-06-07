@@ -31,8 +31,6 @@ namespace Andaluh
             new WordInteractionRules()
         };
 
-
-
         public string Transcribe(string text)
         {
             var tokenizedString = new TokenEvaluator(text);
