@@ -11,16 +11,27 @@ namespace Andaluh.Rules
         private static readonly Regex pattern_digraph_special_2 = new Regex("(?i)(tr|p)([ao])(?:ns|st)([bcçdfghjklmnpqstvwxyz])");
         private static readonly Regex pattern_digraph_special_3 = new Regex("(?i)([aeiouáéíóú])([bdnr])(s)([bcçdfghjklmnpqstvwxyz])");
         private static readonly Regex pattern_digraph_special_4 = new Regex("(?i)([aeiouáéíóú])[djrstxz](l)");
-        private static readonly Regex pattern_digraph_general = new Regex("(?i)([aeiouáéíóú])(" + string.Join("|", Constants.DIGRAPHS) + ")");
+        private static readonly Regex pattern_digraph_general = new Regex(@"(?i)([aeiouáéíóú])(" + string.Join("|", Constants.DIGRAPHS) + ")");
 
+        private readonly Dictionary<string, string> Digraph_RULES_EXCEPT = new Dictionary<string, string>();
         protected override IEnumerable<Rule> Rules => new[]
         {
             new Rule(pattern_digraph_special_1, digraph_special1_rules_replacer),
             new Rule(pattern_digraph_special_2, digraph_special2_rules_replacer),
             new Rule(pattern_digraph_special_3, digraph_special3_rules_replacer),
-            new Rule(pattern_digraph_special_4, digraph_special4_rules_replacer),
-            new Rule(pattern_digraph_general, digraph_general_rules_replacer)
+            new Rule(RuleConstants.pattern_begin_lh, exceptuar_patron),
+            new Rule(pattern_digraph_special_4, digraph_special4_rules_replacer, Digraph_RULES_EXCEPT),
+            new Rule(pattern_digraph_general, digraph_general_rules_replacer, Digraph_RULES_EXCEPT)
         };
+
+        private string exceptuar_patron(Match match, string text, int bias)
+        {
+            var palabra = text.GetWholeWord(match.Index + bias);
+            if (!Digraph_RULES_EXCEPT.ContainsKey(palabra))
+                Digraph_RULES_EXCEPT.Add(palabra, palabra);
+
+            return match.Value;
+        }
 
         private string digraph_special1_rules_replacer(Match match, string text, int bias) =>
             match.Value[1] switch

@@ -38,20 +38,10 @@ namespace Andaluh.Extensions
 
         public static string GetWholeWord(this string text, int index)
         {
-            int startIndex, endIndex;
-            startIndex = text.GetWordStartIndex(index);
-            endIndex = text.GetWordEndIndex(index);
+            var startIndex = text.GetWordStartIndex(index);
+            var endIndex = text.GetWordEndIndex(index);
+
             return text.Substring(startIndex, endIndex - startIndex);
-        }
-
-        public static int GetWordEndIndex(this string text, int index)
-        {
-            if (index >= text.Length) return text.Length;
-
-            for (int i = index; i < text.Length; i++)
-                if (Constants.CARACTERES_NO_PALABRA.Any(c => c == text[i])) return i;
-
-            return text.Length;
         }
 
         public static int GetWordStartIndex(this string text, int index)
@@ -63,18 +53,32 @@ namespace Andaluh.Extensions
             return 0;
         }
 
+
+        public static int GetWordEndIndex(this string text, int index)
+        {
+            if (index >= text.Length) return text.Length;
+
+            for (int i = index; i < text.Length; i++)
+                if (Constants.CARACTERES_NO_PALABRA.Any(c => c == text[i])) return i;
+
+            return text.Length;
+        }
+        
         public static string GetPrefix(this string text, Match match, int bias)
         {
-            var palabra = text.GetWholeWord(match.Index + bias);
+            var matchIndex = match.Index + bias;
+            var startIndex = text.GetWordStartIndex(matchIndex);
 
-            return palabra.Substring(0, palabra.IndexOf(match.Value));
+            return text.Substring(startIndex, matchIndex - startIndex);
         }
 
         public static string GetSuffix(this string text, Match match, int bias)
         {
-            var palabra = text.GetWholeWord(match.Index + bias);
+            var matchIndex = match.Index + bias;
 
-            return palabra.Substring(palabra.IndexOf(match.Value) + match.Value.Length);
+            var endIndex = text.GetWordEndIndex(matchIndex);
+
+            return text.Substring(matchIndex + match.Value.Length, endIndex - matchIndex - match.Value.Length);
         }
 
         public static string KeepCase(this string word, string replacement_word)

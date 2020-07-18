@@ -5,7 +5,7 @@
     <LangVersion>8.0</LangVersion>
     <OutputType>Library</OutputType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <Authors>Chan (aburrio@gmail.com) | AndaluGeeks</Authors>
     <Company>AndaluGeeks</Company>
@@ -15,9 +15,9 @@
     <RepositoryUrl>https://github.com/andalugeeks/andaluh-net</RepositoryUrl>
     <PackageTags>Transliteration, Transcription, Andaluz, Andalu, Andalûh, Andalú</PackageTags>
     <Product>Transcriptor Andaluh</Product>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.1.2</FileVersion>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

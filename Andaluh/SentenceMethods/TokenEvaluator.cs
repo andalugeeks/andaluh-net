@@ -71,7 +71,7 @@ namespace Andaluh.SentenceMethods
 
         private void AddExceptions(string text)
         {
-            var exceptions = new Regex($"(?i)({string.Join('|', SentenceExceptions.AllExceptions.Keys)})");
+            var exceptions = new Regex(@$"(?i)(\b{string.Join('|', SentenceExceptions.AllExceptions.Keys)})\b");
             var matches = exceptions.Matches(text).Where(x => x.Success);
 
             foreach (var match in matches)

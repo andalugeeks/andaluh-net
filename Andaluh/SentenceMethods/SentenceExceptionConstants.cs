@@ -11,6 +11,7 @@ namespace Andaluh.SentenceMethods
 
         private static Dictionary<string, string> Exceptions = new Dictionary<string, string>
         {
+            { "et", "et" },
             { "a capela","a capela"},
             { "a contráriis","a contrárî"},
             { "a contrario sensu","a contrario çençu"},
@@ -50,6 +51,7 @@ namespace Andaluh.SentenceMethods
             { "ad referéndum","ârreferendum"},
             { "ad tempus","âttempû"},
             { "ad valórem","âbbalórem"},
+            { "álter ego", "árterego" },
             { "ex abrupto","ehabrûtto" },
             { "ex aequo","ehaecuo" },
             { "ex cáthedra","êccátedra" },
