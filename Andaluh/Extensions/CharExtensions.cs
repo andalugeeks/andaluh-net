@@ -11,7 +11,7 @@
             // If no tilde, replace with circumflex
             if (i != -1) return Constants.VOWELS_ALL_TILDE[i];
 
-            if (Constants.VOWELS_ALL_TILDE.Contains(vowel)) return vowel;
+            if (Constants.VOWELS_ALL_TILDE.Contains(vowel.ToString())) return vowel;
 
             return '#';
         }
@@ -23,7 +23,7 @@
 
             if (i != -1) return Constants.VOWELS_ALL_NOTILDE[i + 5];
 
-            if (Constants.VOWELS_ALL_TILDE.Contains(vowel)) return vowel;
+            if (Constants.VOWELS_ALL_TILDE.Contains(vowel.ToString())) return vowel;
 
             return '#';
         }

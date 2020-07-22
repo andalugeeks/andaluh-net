@@ -45,7 +45,7 @@ namespace Andaluh.Rules
         {
             string init_char = match.Groups[1].Value;
             char vowel_char = match.Groups[2].Value[0];
-            char cons_char = match.Groups[0].Value[^1];
+            char cons_char = match.Groups[0].Value.GetCharMinusRight(1);
 
             return cons_char.ToLower() == 'l' ?
                  init_char + vowel_char.apply_repl_rules() + cons_char + "-" + cons_char :
@@ -57,7 +57,7 @@ namespace Andaluh.Rules
             var vowel_char = match.Value[0].ToString();
             var cons_char = match.Value[1].ToString();
             var s_char = match.Value[2];
-            var digraph_char = match.Value[^1];
+            var digraph_char = match.Value.GetCharMinusRight(1);
 
             return cons_char.ToLower() == "r" && s_char.ToLower() == 's' ?
                 vowel_char + cons_char + digraph_char + digraph_char :
@@ -67,7 +67,7 @@ namespace Andaluh.Rules
         private string digraph_special4_rules_replacer(Match match, string text, int bias)
         {
             var vowel_char = match.Value[0].ToString();
-            var digraph_char = match.Value[^1];
+            var digraph_char = match.Value.GetCharMinusRight(1);
 
             return vowel_char.apply_repl_rules() + digraph_char + "-" + digraph_char;
         }

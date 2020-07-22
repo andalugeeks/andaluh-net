@@ -25,15 +25,15 @@ namespace Andaluh.Rules
         };
 
         private string FinalesAdor(Match match, string text, int bias) =>
-            match.Groups[0].Value[0..^match.Groups[1].Length] + match.Groups[1].Value[0] + match.Groups[1].Value[2..];
+            match.Groups[0].Value.GetRangeMinusRight(0, match.Groups[1].Length) + match.Groups[1].Value[0] + match.Groups[1].Value.Substring(2);
         private string FinalesDura(Match match, string text, int bias)
         {
             var charBefore = match.Groups[1].Value;
             if (charBefore == "n" || charBefore == "r") return match.Groups[0].Value;
 
-            var prefijo = match.Groups[0].Value[^3];
+            var prefijo = match.Groups[0].Value.GetCharMinusRight(3);
             var vocalAcentuada = prefijo.KeepCase(prefijo.GetVowelTilde());
-            var final = match.Groups[0].Value[3..5];
+            var final = match.Groups[0].Value.GetRange(3, 5);
 
             return charBefore + vocalAcentuada + final;
         }

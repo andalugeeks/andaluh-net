@@ -45,11 +45,11 @@ namespace Andaluh.SentenceMethods
 
             var gaps = new List<Token>();
 
-            if (Tokens[0].StartIndex > 0) gaps.Add(Token.GetStandardToken(text[0..Tokens[0].StartIndex], 0));
+            if (Tokens[0].StartIndex > 0) gaps.Add(Token.GetStandardToken(text.GetRange(0, Tokens[0].StartIndex), 0));
 
             for (int i = 0; i < Tokens.Count - 1; i++)
             {
-                var gapText = text[Tokens[i].EndIndex..Tokens[i + 1].StartIndex];
+                var gapText = text.GetRange(Tokens[i].EndIndex, Tokens[i + 1].StartIndex);
                 if (gapText.Length == 0) continue;
 
                 gaps.Add(Token.GetStandardToken(gapText, Tokens[i].EndIndex));
@@ -71,7 +71,7 @@ namespace Andaluh.SentenceMethods
 
         private void AddExceptions(string text)
         {
-            var exceptions = new Regex(@$"(?i)(\b{string.Join('|', SentenceExceptions.AllExceptions.Keys)})\b");
+            var exceptions = new Regex(@$"(?i)(\b{string.Join("|", SentenceExceptions.AllExceptions.Keys)})\b");
             var matches = exceptions.Matches(text).Where(x => x.Success);
 
             foreach (var match in matches)

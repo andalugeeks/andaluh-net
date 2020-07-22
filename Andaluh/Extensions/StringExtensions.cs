@@ -108,5 +108,14 @@ namespace Andaluh.Extensions
         }
 
         public static bool IsNullOrEmpty(this string str) => str == null || str.Trim().Length == 0;
+
+        public static string GetRange(this string text, int start, int end) =>
+            text.Substring(start, end - start);
+
+        public static string GetRangeMinusRight(this string text, int start, int minusEnd) =>
+            text.Substring(start, text.Length - minusEnd);
+
+        public static char GetCharMinusRight(this string text, int minusEnd) =>
+            text[text.Length - minusEnd];
     }
 }
