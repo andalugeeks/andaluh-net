@@ -8,11 +8,10 @@ namespace Andaluh.Rules
 {
     internal class HRules : RuleBundle
     {
-        private static readonly Regex pattern_aha = new Regex("(?i)(aha|aho)");
-        //private static readonly Regex pattern_aha = new Regex("(?i)([aá])(h)([aá])");
+        private static readonly Regex pattern_aha = new Regex("(?i)([aá]h[aáeéíuú]|aho(?!rr|ra|ri)|ehe|ehi(?!sto)|oho|ih[ií]|uhu)");
         private static readonly Regex pattern_h_general = new Regex("(?i)(?<!c)(h)([aáeéiíoóuú])");
         private static readonly Regex pattern_h_hua = new Regex("(?i)(?<!c)(h)(ua)");
-        private static readonly Regex pattern_h_hue = new Regex("(?i)(?<!c)(h)(u)(e)");
+        private static readonly Regex pattern_h_hue = new Regex("(?i)((?<!c)(h)(u)(e|é))|((?<!c)(h)(u)(i))");
 
         private readonly Dictionary<string, string> H_RULES_EXCEPT = new Dictionary<string, string>()
         {
@@ -27,13 +26,14 @@ namespace Andaluh.Rules
 
         protected override IEnumerable<Rule> Rules => new[]
         {
+            new Rule(RuleConstants.pattern_begin_lh, exceptuar_patron),
             new Rule(pattern_h_hua, h_hua_rules_replacer),
             new Rule(pattern_h_hue, h_hue_rules_replacer),
-            new Rule(pattern_aha, exceptuar_aha),
+            new Rule(pattern_aha, exceptuar_patron),
             new Rule(pattern_h_general, h_rules_replacer, H_RULES_EXCEPT)
         };
 
-        private string exceptuar_aha(Match match, string text, int bias)
+        private string exceptuar_patron(Match match, string text, int bias)
         {
             var palabra = text.GetWholeWord(match.Index + bias);
             if (!H_RULES_EXCEPT.ContainsKey(palabra))
@@ -44,7 +44,7 @@ namespace Andaluh.Rules
 
         private string h_hue_rules_replacer(Match match, string text, int bias)
         {
-            string g_correct_capitalization = match.Value[0].IsUpperCase() ? "G" : "g";
+            string g_correct_capitalization = match.Value[0].KeepCase('g');
             var result = g_correct_capitalization + match.Value.Substring(1);
 
             AddTransliteratedWordAsExceptionForGueGui(match, text, bias, result);
@@ -56,8 +56,8 @@ namespace Andaluh.Rules
         {
             var palabra = text.GetWholeWord(match.Index + bias);
             var newWord = palabra.Replace(match.Value, result).ToLower();
-            if (!DynamicRuleExceptions.ContainsKey(newWord))
-                DynamicRuleExceptions.Add(newWord, newWord);
+            if (!DelayedAfterRuleDynamicRuleExceptions.ContainsKey(newWord))
+                DelayedAfterRuleDynamicRuleExceptions.Add(newWord, newWord);
         }
 
         private string h_hua_rules_replacer(Match match, string text, int bias)

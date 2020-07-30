@@ -30,6 +30,7 @@ namespace Andaluh.Rules.Base
             return ReplaceMany(text);
         }
 
+       
         private string ReplaceMany(string text)
         {
             var matches = Pattern?.Matches(text);
@@ -37,7 +38,7 @@ namespace Andaluh.Rules.Base
 
             var bias = 0;
 
-            foreach (Match match in matches.Where(x=>x.Success))
+            foreach (Match match in matches.Where(x => x.Success))
             {
                 if (NotException(match, text, bias))
                 {
@@ -52,7 +53,7 @@ namespace Andaluh.Rules.Base
 
         private bool NotException(Match match, string text, int bias) => !IsException(text.GetWholeWord(match.Index + bias));
 
-        private bool IsException(string palabra) => 
+        private bool IsException(string palabra) =>
             Exceptions?.ContainsKey(palabra.ToLower()) == true ||
             DynamicRuleExceptions?.ContainsKey(palabra.ToLower()) == true;
 

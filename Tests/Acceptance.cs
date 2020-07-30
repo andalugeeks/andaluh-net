@@ -41,6 +41,6 @@ namespace Tests
 
         [Fact]
         public void Test12() =>
-            Assert.Equal("Oye çêççy @miguel, la wêh HTTPS://andaluh.es no çale en https://www.google.es pero çi en http://google.com #porqueseñor", EPA.Transcribe("Oye sexy @miguel, la web HTTPS://andaluh.es no sale en https://www.google.es pero si en http://google.com #porqueseñor"));
+            Assert.Equal("Oye çêççy @miguel, la wêh HTTPS://andaluh.es no çale en google.es pero çi en http://google.com #porqueseñor", EPA.Transcribe("Oye sexy @miguel, la web HTTPS://andaluh.es no sale en google.es pero si en http://google.com #porqueseñor"));
     }
 }

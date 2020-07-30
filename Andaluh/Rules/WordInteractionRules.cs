@@ -16,8 +16,8 @@ namespace Andaluh.Rules
 
         private static string word_interaction_rules_replacer(Match match, string text, int bias)=>
             match.Value[0].ToLower() == 'd' ?
-            match.Value[0..2] + (match.Value[2].IsUpperCase() ? "R" : "r") + match.Value[3..] :
-            match.Value[0] + (match.Value[1].IsUpperCase() ? "R" : "r") + match.Value[2..];
+            match.Value.GetRange(0, 2) + (match.Value[2].IsUpperCase() ? "R" : "r") + match.Value.Substring(3) :
+            match.Value[0] + (match.Value[1].IsUpperCase() ? "R" : "r") + match.Value.Substring(2);
 
         public WordInteractionRules() : base()
         { }

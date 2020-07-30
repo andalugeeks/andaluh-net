@@ -8,12 +8,13 @@ namespace Andaluh.Rules
 {
     internal class WordEndingRules : RuleBundle
     {
-        private static readonly Regex pattern_intervowel_d_end = new Regex(@"(?i)([aiíÍ])(d)([oa])(s?)\b");
+        private static readonly Regex pattern_intervowel_d_end_exceptions = new Regex(@"(?i)[áéíóú][^aeiouáéíóú]\b");
+        private static readonly Regex pattern_intervowel_d_end = new Regex(@"(?i)([aií])(d)([oa])(s?)\b");
         private static readonly Regex pattern_eps_end = new Regex("(?i)(e)(ps)");
         private static readonly Regex pattern_d_end = new Regex(@"(?i)([aeiouáéíóú])(d)\b");
         private static readonly Regex pattern_s_end = new Regex(@"(?i)([aeiouáéíóú])(s)\b");
         private static readonly Regex pattern_const_end = new Regex(@"(?i)([aeiouáâçéíóú])([bcfgjkprtxz]\b)");
-        private static readonly Regex pattern_l_end = new Regex(@"(?i)([aeiouáâçéíóú])(l\b)");
+        private static readonly Regex pattern_l_end = new Regex(@"(?i)([aeiouáâçéíóú])l\b");
         private static readonly Regex pattern_vocal_tilde = new Regex("(?i)á|é|í|ó|ú");
 
         private static readonly Dictionary<string, string> WORDEND_D_INTERVOWEL_RULES_EXCEPT = new Dictionary<string, string>()
@@ -89,7 +90,6 @@ namespace Andaluh.Rules
         private static readonly Dictionary<string, string> WORDEND_CONST_RULES_EXCEPT = new Dictionary<string, string>()
         {
             {"al", "al"},
-            {"cual", "cuâ"},
             {"del", "del"},
             {"dél", "dél"},
             {"el", "el"},
@@ -114,8 +114,8 @@ namespace Andaluh.Rules
             new Rule(pattern_eps_end, eps_end_rules_replacer),
             new Rule(pattern_d_end, d_end_rules_replacer, WORDEND_D_RULES_EXCEPT),
             new Rule(pattern_s_end, s_end_rules_replacer, WORDEND_S_RULES_EXCEPT),
-            new Rule(pattern_const_end, const_end_rules_replacer, WORDEND_CONST_RULES_EXCEPT),
-            new Rule(pattern_l_end, const_end_rules_replacer, WORDEND_CONST_RULES_EXCEPT)
+            new Rule(pattern_l_end, const_end_rules_replacer, WORDEND_CONST_RULES_EXCEPT),
+            new Rule(pattern_const_end, const_end_rules_replacer, WORDEND_CONST_RULES_EXCEPT)
         };
 
         private bool contain_vocal_tilde(string text) => pattern_vocal_tilde.Match(text).Success;
@@ -123,10 +123,15 @@ namespace Andaluh.Rules
 
         private string intervowel_d_end_rules_replacer(Match match, string text, int bias)
         {
+            var prefix = text.GetPrefix(match, bias);
+            
+            if (pattern_intervowel_d_end_exceptions.IsMatch(prefix)) return match.Value;
+
             var firstVowel = match.Value[0];
             var lastVowel = match.Value[2];
 
-            if (contain_vocal_tilde(firstVowel)) return match.Value;
+
+            if (contain_vocal_tilde(prefix)) return match.Value;
 
             switch (match.Value)
             {
@@ -190,7 +195,7 @@ namespace Andaluh.Rules
 
             if (contain_vocal_tilde(prefix)) return suffixFirstChar.apply_repl_rules();
 
-            return contain_vocal_tilde(suffixFirstChar) ?
+            return suffixFirstChar != 'í' && suffixFirstChar != 'ú' && contain_vocal_tilde(suffixFirstChar) ?
                 suffixFirstChar.apply_repl_rules() :
                 suffixFirstChar.apply_repl_rules() + suffixFirstChar.KeepCase('h');
         }

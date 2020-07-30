@@ -7,6 +7,8 @@ namespace Andaluh.Rules
 {
     internal class GJRules : RuleBundle
     {
+        private static readonly Regex pattern_lge = new Regex("(?i)(lge|lgé|lgi|lgí)");
+        private static readonly Regex pattern_lj = new Regex("(?i)(lj)");
         private static readonly Regex pattern_gj = new Regex("(?i)(g(?=[eiéí])|j)([aeiouáéíóú])");
         private static readonly Regex pattern_gue_gui = new Regex("(?i)(g)u([eiéí])");
         private static readonly Regex pattern_guue_guui = new Regex("(?i)(g)(ü)([eiéí])");
@@ -22,6 +24,8 @@ namespace Andaluh.Rules
 
         protected override IEnumerable<Rule> Rules => new[]
         {
+            new Rule(pattern_lge, lge_rules_replacer),
+            new Rule(pattern_lj, lj_rules_replacer),
             new Rule(pattern_gj, gj_rules_replacer, GJ_RULES_EXCEPT),
             new Rule(pattern_gue_gui, gue_gui_rules_replacer), //DynamicRuleExceptions
             new Rule(pattern_guue_guui, guue_guui_rules_replacer),
@@ -29,12 +33,14 @@ namespace Andaluh.Rules
             new Rule(pattern_guel_gues, guel_gues_rules_replacer)
         };
 
+        private string lge_rules_replacer(Match match, string text, int bias)
+            => match.Value[0].KeepCase('r') + match.Value[1].KeepCase('h') + match.Value[2];
 
-        private string gj_rules_replacer(Match match, string text, int bias)
-        {
-            string x_correct_capitalization = match.Value[0].IsUpperCase() ? Constants.VVF_mayus : Constants.VVF;
-            return x_correct_capitalization + match.Value[1];
-        }
+        private string lj_rules_replacer(Match match, string text, int bias)
+            => match.Value[0].KeepCase('r') + match.Value[1].KeepCase('h');
+
+        private string gj_rules_replacer(Match match, string text, int bias) =>
+            match.Value[0].KeepCase(Constants.VVF[0]) + match.Value[1];
 
         private string gue_gui_rules_replacer(Match match, string text, int bias) =>
             match.Value[0].ToString() + match.Value[2].ToString();
